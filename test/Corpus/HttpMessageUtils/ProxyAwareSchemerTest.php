@@ -22,7 +22,6 @@ class ProxyAwareSchemerTest extends TestCase {
 		$_SERVER     = [ $key => $value ];
 		$schemerPost = new ProxyAwareSchemer;
 
-
 		$this->assertSame('https', $schemerPre->withUriWithDetectedScheme($request)->getUri()->getScheme());
 		$this->assertSame('https', $schemerPost->withUriWithDetectedScheme($request)->getUri()->getScheme());
 	}
@@ -37,7 +36,6 @@ class ProxyAwareSchemerTest extends TestCase {
 		$schemerPre  = new ProxyAwareSchemer;
 		$_SERVER     = [];
 		$schemerPost = new ProxyAwareSchemer;
-
 
 		$this->assertSame('http', $schemerPre->withUriWithDetectedScheme($request)->getUri()->getScheme());
 		$this->assertSame('http', $schemerPost->withUriWithDetectedScheme($request)->getUri()->getScheme());
