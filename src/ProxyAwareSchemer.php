@@ -9,9 +9,9 @@ use Psr\Http\Message\UriInterface;
  * Utility to map a Uri or ServerRequestInterface's Uri to the external scheme
  * detected from a proxy such as an AWS load balancer.
  *
- * Example:
+ * ### Example:
  *
- * ```
+ * ```php
  * $serverRequest = \GuzzleHttp\Psr7\ServerRequest::fromGlobals();
  * $serverRequest = (new \Corpus\HttpMessageUtils\ProxyAwareSchemer)->withUriWithDetectedScheme($serverRequest);
  * ```

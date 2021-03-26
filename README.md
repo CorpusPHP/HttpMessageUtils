@@ -22,9 +22,9 @@ composer require 'corpus/http-message-utils'
 Utility to map a Uri or ServerRequestInterface's Uri to the external scheme
 detected from a proxy such as an AWS load balancer.
 
-Example:
+### Example:
 
-```
+```php
 $serverRequest = \GuzzleHttp\Psr7\ServerRequest::fromGlobals();
 $serverRequest = (new \Corpus\HttpMessageUtils\ProxyAwareSchemer)->withUriWithDetectedScheme($serverRequest);
 ```
@@ -78,7 +78,15 @@ Utility to actualize a PSR7 ResponseInterface
 
 Sends headers and body.
 
-Inspired by `http-interop/response-sender` MIT License Copyright (c) 2017 Woody Gilk
+### Example:
+
+```php
+$response = new \GuzzleHttp\Psr7\Response();
+(new \Corpus\HttpMessageUtils\ResponseSender)->send($response);
+```
+
+Inspired by `http-interop/response-sender`
+MIT License Copyright (c) 2017 Woody Gilk
 
 #### Method: ResponseSender->__construct
 
@@ -98,4 +106,10 @@ before transmission.
 
 ---
 
-#### Undocumented Method: `ResponseSender->send(\Psr\Http\Message\ResponseInterface $response)`
+#### Method: ResponseSender->send
+
+```php
+function send(\Psr\Http\Message\ResponseInterface $response) : void
+```
+
+Trigger the transmission of the given \Psr\Http\Message\ResponseInterface

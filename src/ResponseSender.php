@@ -9,7 +9,15 @@ use Psr\Http\Message\ResponseInterface;
  *
  * Sends headers and body.
  *
- * Inspired by `http-interop/response-sender` MIT License Copyright (c) 2017 Woody Gilk
+ * ### Example:
+ *
+ * ```php
+ * $response = new \GuzzleHttp\Psr7\Response();
+ * (new \Corpus\HttpMessageUtils\ResponseSender)->send($response);
+ * ```
+ *
+ * Inspired by `http-interop/response-sender`
+ * MIT License Copyright (c) 2017 Woody Gilk
  *
  * @see https://github.com/http-interop/response-sender/
  */
@@ -38,6 +46,9 @@ class ResponseSender {
 		$this->rewindBody         = $rewindBody;
 	}
 
+	/**
+	 * Trigger the transmission of the given \Psr\Http\Message\ResponseInterface
+	 */
 	public function send( ResponseInterface $response ) : void {
 		if( $this->fullHttpStmtHeader ) {
 			$httpStmt = sprintf('HTTP/%s %s %s',
