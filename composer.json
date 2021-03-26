@@ -11,7 +11,9 @@
 		"guzzlehttp/psr7": "^1.8",
 		"corpus/coding-standard": "^0.3.0",
 		"squizlabs/php_codesniffer": "^3.5",
-		"friendsofphp/php-cs-fixer": "^2.18"
+		"friendsofphp/php-cs-fixer": "^2.18",
+		"donatj/mddoc": "dev-master",
+		"donatj/drop": "^1.0"
 	},
 	"license": "MIT",
 	"authors": [
