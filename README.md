@@ -10,7 +10,7 @@ Utilities for working with [PSR-7 Http Message](https://www.php-fig.org/psr/psr-
 ## Requirements
 
 - **psr/http-message**: ^1.0
-- **php**: >=7.3
+- **php**: >=7.2
 
 ## Installing
 
