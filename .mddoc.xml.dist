@@ -1,25 +1,20 @@
 <mddoc>
-
-	<docpage target="README.md" autoloader="psr4" autoloader-root="src" autoloader-root-namespace="Corpus\HttpMessageUtils">
+	<docpage target="README.md" autoloader="psr4" autoloader-root="src"
+			 autoloader-root-namespace="Corpus\HttpMessageUtils">
 
 		<section title="HTTP Message Utils">
 			<badge-poser type="version"/>
 			<badge-poser type="license"/>
 			<badge-github-action name="CorpusPHP/HttpMessageUtils" workflow="CI"/>
 			<text>Utilities for working with [PSR-7 Http Message](https://www.php-fig.org/psr/psr-7/) objects.</text>
+
 			<section title="Requirements">
 				<composer-requires/>
 			</section>
 			<section title="Installing">
 				<composer-install/>
 			</section>
-<!--			<section title="Usage">-->
-<!--				<text>Getting started with Di the three most important methods follow.-->
-<!-- - The `set` method is used to set either the item to return or a lambda to lazily construct it, optionally taking constructor arguments.-->
-<!-- - The `get` method is used to retrieve values with memoization after the initial lazy loading.-->
-<!-- - The `getNew` is used to invoke the lazy loading creation lambda every call, optionally taking an array of constructor arguments as a second parameter.</text>-->
-<!--				<source name="example/example.php" lang="php"/>-->
-<!--			</section>-->
+
 			<section title="Documentation">
 				<recursiveDirectory name="src"/>
 			</section>
