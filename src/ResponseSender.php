@@ -24,12 +24,11 @@ class ResponseSender {
 	/**
 	 * ResponseSender constructor.
 	 *
-	 * @param bool $fullHttpStmtHeader Setting to `true` enables full HTTP statement
-	 *                                 construction which allows non-standard reason
-	 *                                 phrases and potentially mismatched protocol versions.
+	 * @param bool $fullHttpStmtHeader Setting to `true` enables full HTTP statement construction which allows
+	 *                                 non-standard reason phrases and potentially mismatched protocol versions.
 	 *                                 Use with care.
-	 * @param bool $rewindBody         Setting to `false` allows you to disable
-	 *                                 rewinding the body of the response before transmission.
+	 * @param bool $rewindBody         Setting to `false` allows you to disable rewinding the body of the response
+	 *                                 before transmission.
 	 */
 	public function __construct(
 		bool $fullHttpStmtHeader = false,

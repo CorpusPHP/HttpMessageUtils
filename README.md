@@ -19,8 +19,6 @@ composer require 'corpus/http-message-utils'
 
 ### Class: \Corpus\HttpMessageUtils\ProxyAwareSchemer
 
-Class ProxyAwareSchemer
-
 Utility to map a Uri or ServerRequestInterface's Uri to the external scheme
 detected from a proxy such as an AWS load balancer.
 
@@ -60,9 +58,8 @@ self::HTTPS_EXPECTED_SERVER_VALUES
 function withUriWithDetectedScheme(\Psr\Http\Message\ServerRequestInterface $serverRequest) : \Psr\Http\Message\ServerRequestInterface
 ```
 
-Given a \Psr\Http\Message\ServerRequestInterface returns a new instance  
-of ServerRequestInterface with a new Uri having the scheme adjusted to  
-match the detected external scheme as defined by the proxies headers.
+Given a \Psr\Http\Message\ServerRequestInterface returns a new instance of ServerRequestInterface with a new Uri  
+having the scheme adjusted to match the detected external scheme as defined by the proxies headers.
 
 ---
 
@@ -72,6 +69,33 @@ match the detected external scheme as defined by the proxies headers.
 function withDetectedScheme(\Psr\Http\Message\UriInterface $uri) : \Psr\Http\Message\UriInterface
 ```
 
-Given a \Psr\Http\Message\UriInterface returns a new instance of  
-UriInterface having the scheme adjusted to match the detected external  
-scheme as defined by the proxies headers.
+Given a \Psr\Http\Message\UriInterface returns a new instance of UriInterface having the scheme adjusted to match  
+the detected external scheme as defined by the proxies headers.
+
+### Class: \Corpus\HttpMessageUtils\ResponseSender
+
+Utility to actualize a PSR7 ResponseInterface
+
+Sends headers and body.
+
+Inspired by `http-interop/response-sender` MIT License Copyright (c) 2017 Woody Gilk
+
+#### Method: ResponseSender->__construct
+
+```php
+function __construct([ bool $fullHttpStmtHeader = false [, bool $rewindBody = true]])
+```
+
+ResponseSender constructor.
+
+##### Parameters:
+
+- ***bool*** `$fullHttpStmtHeader` - Setting to `true` enables full HTTP statement construction which allows
+non-standard reason phrases and potentially mismatched protocol versions.
+Use with care.
+- ***bool*** `$rewindBody` - Setting to `false` allows you to disable rewinding the body of the response
+before transmission.
+
+---
+
+#### Undocumented Method: `ResponseSender->send(\Psr\Http\Message\ResponseInterface $response)`
