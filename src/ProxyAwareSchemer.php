@@ -9,6 +9,8 @@ use Psr\Http\Message\UriInterface;
  * Utility to map a Uri or ServerRequestInterface's Uri to the external scheme
  * detected from a proxy such as an AWS load balancer.
  *
+ * Will only ever upgrade to https, never downgrade.
+ *
  * ### Example:
  *
  * ```php
