@@ -40,14 +40,14 @@ class ProxyAwareSchemer {
 	 */
 	public function __construct(
 		?array $proxyServerValues = null,
-		?array &$server = null
+		?array $server = null
 	) {
 		$this->proxyServerValues = $proxyServerValues ?? self::HTTPS_EXPECTED_SERVER_VALUES;
 
 		if( is_array($server) ) {
-			$this->server =& $server;
+			$this->server = $server;
 		} else {
-			$this->server =& $_SERVER;
+			$this->server = $_SERVER;
 		}
 	}
 
