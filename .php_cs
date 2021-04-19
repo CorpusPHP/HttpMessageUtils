@@ -103,7 +103,7 @@ return PhpCsFixer\Config::create()
 			],
 
 			'blank_line_before_statement' => [
-				'statements' => [ 'continue', 'try', 'switch', 'die', 'exit', 'throw', 'return', 'yield', 'do' ],
+				'statements' => [ 'continue', 'try', 'switch', 'die', 'exit', 'throw', 'return', 'do' ],
 			],
 
 			'no_superfluous_phpdoc_tags' => [
