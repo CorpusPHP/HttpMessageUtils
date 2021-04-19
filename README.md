@@ -42,42 +42,79 @@ namespace Corpus\HttpMessageUtils;
 
 class ProxyAwareSchemer {
 	public const HTTPS_EXPECTED_SERVER_VALUES = ['HTTP_X_FORWARDED_PROTOCOL' => 'https', 'HTTP_X_FORWARDED_PROTO' => 'https', 'HTTP_X_FORWARDED_SSL' => 'on', 'HTTP_FRONT_END_HTTPS' => 'on', 'HTTP_X_URL_SCHEME' => 'https', 'HTTPS' => 'on'];
+	public const PORT_EXPECTED_SERVER_KEYS = ['HTTP_X_FORWARDED_PORT'];
+	/** Value for `default port` arguments to remove the port from the URI */
+	public const REMOVE_PORT = -65536;
 }
 ```
 
 #### Method: ProxyAwareSchemer->__construct
 
 ```php
-function __construct([ ?array $proxyServerValues = null [, ?array $server = null]])
+function __construct([ ?array $server = null [, ?array $proxyServerHttpsKeyValues = null [, ?array $proxyServerPortKeys = null]]])
 ```
 
 ##### Parameters:
 
-- ***array*** | ***null*** `$proxyServerValues` - Map of $_SERVER keys to their expected https-positive value. Defaults to
-self::HTTPS_EXPECTED_SERVER_VALUES
 - ***array*** | ***null*** `$server` - Server array to inspect. Defaults to $_SERVER.
+- ***array*** | ***null*** `$proxyServerHttpsKeyValues` - Map of $_SERVER keys to their expected https-positive value.
+Defaults to ProxyAwareSchemer::HTTPS_EXPECTED_SERVER_VALUES
+- ***string[]*** | ***null*** `$` - Array of $_SERVER keys to check for a forwarded port value.
 
 ---
 
 #### Method: ProxyAwareSchemer->withUriWithDetectedScheme
 
 ```php
-function withUriWithDetectedScheme(\Psr\Http\Message\ServerRequestInterface $serverRequest) : \Psr\Http\Message\ServerRequestInterface
+function withUriWithDetectedScheme(\Psr\Http\Message\ServerRequestInterface $serverRequest [, bool $detectPort = true [, ?int $defaultOnHttps = self::REMOVE_PORT]]) : \Psr\Http\Message\ServerRequestInterface
 ```
 
 Given a \Psr\Http\Message\ServerRequestInterface returns a new instance of ServerRequestInterface with a new Uri  
 having the scheme adjusted to match the detected external scheme as defined by the proxies headers.
+
+##### Parameters:
+
+- ***bool*** `$detectPort` - Enable / Disable proxy port sniffing.
+- ***int*** | ***null*** `$defaultOnHttps` - Default port to use if sniffing fails but HTTPS proxy is detected.
+Defaults to ProxyAwareSchemer::REMOVE_PORT which removes the port information
+from the URI.
+Passing null will leave port as-is.
 
 ---
 
 #### Method: ProxyAwareSchemer->withDetectedScheme
 
 ```php
-function withDetectedScheme(\Psr\Http\Message\UriInterface $uri) : \Psr\Http\Message\UriInterface
+function withDetectedScheme(\Psr\Http\Message\UriInterface $uri [, bool $detectPort = true [, ?int $defaultOnHttps = self::REMOVE_PORT]]) : \Psr\Http\Message\UriInterface
 ```
 
-Given a \Psr\Http\Message\UriInterface returns a new instance of UriInterface having the scheme adjusted to match  
+Given a \Psr\Http\Message\UriInterface returns a instance of UriInterface having the scheme adjusted to match  
 the detected external scheme as defined by the proxies headers.
+
+##### Parameters:
+
+- ***bool*** `$detectPort` - Enable / Disable proxy port sniffing.
+- ***int*** | ***null*** `$defaultOnHttps` - Default port to use if sniffing fails but HTTPS proxy is detected.
+Defaults to ProxyAwareSchemer::REMOVE_PORT which removes the port information
+from the URI.
+Passing null will leave port as-is.
+
+---
+
+#### Method: ProxyAwareSchemer->withDetectedPort
+
+```php
+function withDetectedPort(\Psr\Http\Message\UriInterface $uri [, ?int $default = null]) : \Psr\Http\Message\UriInterface
+```
+
+Given a \Psr\Http\Message\UriInterface returns a instance of UriInterface having the port adjusted to match  
+the detected external scheme as defined by the proxies headers.
+
+##### Parameters:
+
+- ***int*** | ***null*** `$default` - Defines a default fallback port.
+Passing ProxyAwareSchemer::REMOVE_PORT will default to removing the port information.
+Defaults to null - null leaves port as-is.
 
 ### Class: \Corpus\HttpMessageUtils\ResponseSender
 

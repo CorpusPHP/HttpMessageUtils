@@ -71,9 +71,17 @@ class ProxyAwareSchemer {
 	/**
 	 * Given a \Psr\Http\Message\ServerRequestInterface returns a new instance of ServerRequestInterface with a new Uri
 	 * having the scheme adjusted to match the detected external scheme as defined by the proxies headers.
+	 *
+	 * @param bool     $detectPort     Enable / Disable proxy port sniffing.
+	 * @param int|null $defaultOnHttps Default port to use if sniffing fails but HTTPS proxy is detected.
+	 *                                 Defaults to ProxyAwareSchemer::REMOVE_PORT which removes the port information
+	 *                                 from the URI.
+	 *                                 Passing null will leave port as-is.
 	 */
 	public function withUriWithDetectedScheme(
-		ServerRequestInterface $serverRequest, bool $detectPort = true, ?int $defaultOnHttps = self::REMOVE_PORT
+		ServerRequestInterface $serverRequest,
+		bool $detectPort = true,
+		?int $defaultOnHttps = self::REMOVE_PORT
 	) : ServerRequestInterface {
 		return $serverRequest->withUri(
 			$this->withDetectedScheme($serverRequest->getUri(), $detectPort, $defaultOnHttps)
@@ -83,6 +91,12 @@ class ProxyAwareSchemer {
 	/**
 	 * Given a \Psr\Http\Message\UriInterface returns a instance of UriInterface having the scheme adjusted to match
 	 * the detected external scheme as defined by the proxies headers.
+	 *
+	 * @param bool     $detectPort     Enable / Disable proxy port sniffing.
+	 * @param int|null $defaultOnHttps Default port to use if sniffing fails but HTTPS proxy is detected.
+	 *                                 Defaults to ProxyAwareSchemer::REMOVE_PORT which removes the port information
+	 *                                 from the URI.
+	 *                                 Passing null will leave port as-is.
 	 */
 	public function withDetectedScheme(
 		UriInterface $uri,
@@ -106,7 +120,9 @@ class ProxyAwareSchemer {
 	 * Given a \Psr\Http\Message\UriInterface returns a instance of UriInterface having the port adjusted to match
 	 * the detected external scheme as defined by the proxies headers.
 	 *
-	 * @param int|null $default Defines a default fallback port
+	 * @param int|null $default Defines a default fallback port.
+	 *                          Passing ProxyAwareSchemer::REMOVE_PORT will default to removing the port information.
+	 *                          Defaults to null - null leaves port as-is.
 	 */
 	public function withDetectedPort( UriInterface $uri, ?int $default = null ) : UriInterface {
 		foreach( $this->proxyServerPortKeys as $portKey ) {
