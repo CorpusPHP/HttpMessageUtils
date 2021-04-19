@@ -32,25 +32,40 @@ class ProxyAwareSchemer {
 		'HTTPS'                     => 'on',
 	];
 
+	public const PORT_EXPECTED_SERVER_KEYS = [
+		'HTTP_X_FORWARDED_PORT',
+	];
+
+	/** Value for `default port` arguments to remove the port from the URI */
+	public const REMOVE_PORT = -65536;
+
 	/** @var array|string[] */
-	private $proxyServerValues;
+	private $proxyServerHttpsKeyValues;
+
+	/** @var string[] */
+	private $proxyServerPortKeys;
 
 	/**
-	 * @param array|null $proxyServerValues Map of $_SERVER keys to their expected https-positive value. Defaults to
-	 *                                      self::HTTPS_EXPECTED_SERVER_VALUES
-	 * @param array|null $server            Server array to inspect. Defaults to $_SERVER.
+	 * @param array|null $server Server array to inspect. Defaults to $_SERVER.
+	 *
+	 * @param array|null $proxyServerHttpsKeyValues Map of $_SERVER keys to their expected https-positive value.
+	 *                                              Defaults to ProxyAwareSchemer::HTTPS_EXPECTED_SERVER_VALUES
+	 *
+	 * @param string[]|null Array of $_SERVER keys to check for a forwarded port value.
 	 */
 	public function __construct(
-		?array $proxyServerValues = null,
-		?array $server = null
+		?array $server = null,
+		?array $proxyServerHttpsKeyValues = null,
+		?array $proxyServerPortKeys = null
 	) {
-		$this->proxyServerValues = $proxyServerValues ?? self::HTTPS_EXPECTED_SERVER_VALUES;
-
 		if( is_array($server) ) {
 			$this->server = $server;
 		} else {
 			$this->server = $_SERVER;
 		}
+
+		$this->proxyServerHttpsKeyValues = $proxyServerHttpsKeyValues ?? self::HTTPS_EXPECTED_SERVER_VALUES;
+		$this->proxyServerPortKeys       = $proxyServerPortKeys ?? self::PORT_EXPECTED_SERVER_KEYS;
 	}
 
 	/**
@@ -58,27 +73,56 @@ class ProxyAwareSchemer {
 	 * having the scheme adjusted to match the detected external scheme as defined by the proxies headers.
 	 */
 	public function withUriWithDetectedScheme(
-		ServerRequestInterface $serverRequest
+		ServerRequestInterface $serverRequest, bool $detectPort = true, ?int $defaultOnHttps = self::REMOVE_PORT
 	) : ServerRequestInterface {
 		return $serverRequest->withUri(
-			$this->withDetectedScheme($serverRequest->getUri())
+			$this->withDetectedScheme($serverRequest->getUri(), $detectPort, $defaultOnHttps)
 		);
 	}
 
 	/**
-	 * Given a \Psr\Http\Message\UriInterface returns a new instance of UriInterface having the scheme adjusted to match
+	 * Given a \Psr\Http\Message\UriInterface returns a instance of UriInterface having the scheme adjusted to match
 	 * the detected external scheme as defined by the proxies headers.
 	 */
-	public function withDetectedScheme( UriInterface $uri ) : UriInterface {
-		foreach( $this->proxyServerValues as $serverKey => $serverValue ) {
+	public function withDetectedScheme(
+		UriInterface $uri,
+		bool $detectPort = true,
+		?int $defaultOnHttps = self::REMOVE_PORT
+	) : UriInterface {
+		foreach( $this->proxyServerHttpsKeyValues as $serverKey => $serverValue ) {
 			if( isset($this->server[$serverKey])
 				&& strtolower($this->server[$serverKey]) === $serverValue
 			) {
-				return $uri->withScheme('https');
+				$newUri = $uri->withScheme('https');
+
+				return $detectPort ? $this->withDetectedPort($newUri, $defaultOnHttps) : $newUri;
 			}
 		}
 
-		return $uri;
+		return $detectPort ? $this->withDetectedPort($uri) : $uri;
+	}
+
+	/**
+	 * Given a \Psr\Http\Message\UriInterface returns a instance of UriInterface having the port adjusted to match
+	 * the detected external scheme as defined by the proxies headers.
+	 *
+	 * @param int|null $default Defines a default fallback port
+	 */
+	public function withDetectedPort( UriInterface $uri, ?int $default = null ) : UriInterface {
+		foreach( $this->proxyServerPortKeys as $portKey ) {
+			if( isset($this->server[$portKey]) ) {
+				$port = (int)$this->server[$portKey];
+				if( $port > 0 && $port <= 65535 ) {
+					return $uri->withPort($port);
+				}
+			}
+		}
+
+		if( $default === self::REMOVE_PORT ) {
+			return $uri->withPort(null);
+		}
+
+		return $default ? $uri->withPort($default) : $uri;
 	}
 
 }
