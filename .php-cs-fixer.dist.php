@@ -7,7 +7,7 @@ $finder = PhpCsFixer\Finder::create()
 	->name('*.php');
 
 
-return PhpCsFixer\Config::create()
+return (new PhpCsFixer\Config)
 	->setUsingCache(true)
 	->setIndent("\t")
 	->setLineEnding("\n")
@@ -36,6 +36,8 @@ return PhpCsFixer\Config::create()
 
 			'no_leading_import_slash'         => true,
 			'no_leading_namespace_whitespace' => true,
+
+			'array_indentation' => true,
 
 			'no_whitespace_in_blank_line' => true,
 
@@ -103,7 +105,7 @@ return PhpCsFixer\Config::create()
 			],
 
 			'blank_line_before_statement' => [
-				'statements' => [ 'continue', 'try', 'switch', 'die', 'exit', 'throw', 'return', 'do' ],
+				'statements' => [ 'continue', 'try', 'switch', 'exit', 'throw', 'return', 'do' ],
 			],
 
 			'no_superfluous_phpdoc_tags' => [
@@ -119,6 +121,7 @@ return PhpCsFixer\Config::create()
 			'escape_implicit_backslashes' => true,
 			'explicit_indirect_variable'  => true,
 			'heredoc_to_nowdoc'           => true,
+			'heredoc_indentation'         => true,
 
 
 			'no_singleline_whitespace_before_semicolons' => true,
@@ -140,6 +143,7 @@ return PhpCsFixer\Config::create()
 
 			'method_chaining_indentation' => true,
 			'method_argument_space'       => [
+				'on_multiline'                     => 'ignore', // at least until they fix it
 				'keep_multiple_spaces_after_comma' => true,
 			],
 
@@ -156,8 +160,15 @@ return PhpCsFixer\Config::create()
 				'import_functions' => false,
 			],
 
-			'trailing_comma_in_multiline_array' => true,
-			'single_line_comment_style' => true,
+			'trailing_comma_in_multiline' => true,
+			'single_line_comment_style'   => true,
+
+			'is_null'    => true,
+			'yoda_style' => [
+				'equal'            => false,
+				'identical'        => false,
+				'less_and_greater' => null,
+			],
 		]
 	)
 	->setFinder($finder);
