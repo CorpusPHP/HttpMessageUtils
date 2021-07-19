@@ -10,6 +10,18 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * The parser itself is authorization type agnostic and works with any RFC7235
  * conforming authorization type.
+ *
+ * ### Example:
+ *
+ * ```php
+ * $serverRequest = \GuzzleHttp\Psr7\ServerRequest::fromGlobals();
+ * $parsedAuth    = (new \Corpus\HttpMessageUtils\Authorization)->parseServerRequest($serverRequest);
+ *
+ * if( $parsedAuth ) {
+ *     echo 'type: ' . $parsedAuth->getType();
+ *     echo 'cred: ' . $parsedAuth->getCredentials();
+ * }
+ * ```
  */
 class AuthorizationPartParser {
 
