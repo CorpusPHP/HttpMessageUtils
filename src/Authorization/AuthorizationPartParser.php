@@ -5,7 +5,7 @@ namespace Corpus\HttpMessageUtils\Authorization;
 use Psr\Http\Message\ServerRequestInterface;
 
 /**
- * Utility to split an Authorization header into <type> and <credentials> ala:
+ * Utility to split an Authorization header into `<type>` and `<credentials>` ala:
  * `Authorization: <type> <credentials>`
  *
  * The parser itself is authorization type agnostic and works with any RFC7235
@@ -43,7 +43,7 @@ class AuthorizationPartParser {
 	}
 
 	/**
-	 * Parses an Authorization header into Type and Credentials
+	 * Parses an Authorization header into `<type>` and `<credentials>`
 	 *
 	 * @param string $headerValue The header value to parse
 	 * @return AuthorizationPartsInterface|null AuthorizationParts on success, null on failure.

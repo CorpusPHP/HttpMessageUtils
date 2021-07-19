@@ -24,7 +24,7 @@ composer require 'corpus/http-message-utils'
 
 ### Class: \Corpus\HttpMessageUtils\Authorization\AuthorizationPartParser
 
-Utility to split an Authorization header into <type> and <credentials> ala:
+Utility to split an Authorization header into `<type>` and `<credentials>` ala:
 `Authorization: <type> <credentials>`
 
 The parser itself is authorization type agnostic and works with any RFC7235
@@ -60,7 +60,7 @@ function __construct([ ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPart
 function parseString(string $headerValue) : ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface
 ```
 
-Parses an Authorization header into Type and Credentials
+Parses an Authorization header into `<type>` and `<credentials>`
 
 ##### Parameters:
 
