@@ -45,12 +45,12 @@ if( $parsedAuth ) {
 #### Method: AuthorizationHeaderParser->__construct
 
 ```php
-function __construct([ ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPartFactory $factory = null])
+function __construct([ ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsFactory $factory = null])
 ```
 
 ##### Parameters:
 
-- ***\Corpus\HttpMessageUtils\Authorization\AuthorizationPartFactory*** | ***null*** `$factory` - Optional factory for construction of result objects
+- ***\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsFactory*** | ***null*** `$factory` - Optional factory for construction of result objects
 
 ---
 

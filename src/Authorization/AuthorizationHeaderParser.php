@@ -26,17 +26,17 @@ use Psr\Http\Message\ServerRequestInterface;
 class AuthorizationHeaderParser {
 
 	private const DEFAULT_HEADER = 'authorization';
-	/** @var AuthorizationPartFactory */
+	/** @var AuthorizationPartsFactory */
 	private $factory;
 
 	/**
-	 * @param AuthorizationPartFactory|null $factory Optional factory for construction of result objects
+	 * @param AuthorizationPartsFactory|null $factory Optional factory for construction of result objects
 	 */
 	public function __construct(
-		?AuthorizationPartFactory $factory = null
+		?AuthorizationPartsFactory $factory = null
 	) {
 		if( !$factory ) {
-			$factory = new AuthorizationPartFactory;
+			$factory = new AuthorizationPartsFactory;
 		}
 
 		$this->factory = $factory;
