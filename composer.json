@@ -10,7 +10,7 @@
 		"phpunit/phpunit": "^6.5 || ^9.3",
 		"php-mock/php-mock-phpunit": "^2.6",
 		"guzzlehttp/psr7": "^1.8",
-		"corpus/coding-standard": "^0.3.0 || ^0.4.0",
+		"corpus/coding-standard": "^0.4",
 		"squizlabs/php_codesniffer": "^3.5",
 		"friendsofphp/php-cs-fixer": "^2.18",
 		"donatj/mddoc": "dev-master",
