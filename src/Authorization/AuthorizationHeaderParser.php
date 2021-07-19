@@ -15,7 +15,7 @@ use Psr\Http\Message\ServerRequestInterface;
  *
  * ```php
  * $serverRequest = \GuzzleHttp\Psr7\ServerRequest::fromGlobals();
- * $parsedAuth    = (new \Corpus\HttpMessageUtils\Authorization)->parseServerRequest($serverRequest);
+ * $parsedAuth    = (new \Corpus\HttpMessageUtils\Authorization\AuthorizationHeaderParser)->parseServerRequest($serverRequest);
  *
  * if( $parsedAuth ) {
  *     echo 'type: ' . $parsedAuth->getType();
@@ -23,7 +23,7 @@ use Psr\Http\Message\ServerRequestInterface;
  * }
  * ```
  */
-class AuthorizationPartParser {
+class AuthorizationHeaderParser {
 
 	private const DEFAULT_HEADER = 'authorization';
 	/** @var AuthorizationPartFactory */

@@ -22,7 +22,7 @@ composer require 'corpus/http-message-utils'
 
 ## Documentation
 
-### Class: \Corpus\HttpMessageUtils\Authorization\AuthorizationPartParser
+### Class: \Corpus\HttpMessageUtils\Authorization\AuthorizationHeaderParser
 
 Utility to split an Authorization header into `<type>` and `<credentials>` ala:
 `Authorization: <type> <credentials>`
@@ -34,7 +34,7 @@ conforming authorization type.
 
 ```php
 $serverRequest = \GuzzleHttp\Psr7\ServerRequest::fromGlobals();
-$parsedAuth    = (new \Corpus\HttpMessageUtils\Authorization)->parseServerRequest($serverRequest);
+$parsedAuth    = (new \Corpus\HttpMessageUtils\Authorization\AuthorizationHeaderParser)->parseServerRequest($serverRequest);
 
 if( $parsedAuth ) {
     echo 'type: ' . $parsedAuth->getType();
@@ -42,7 +42,7 @@ if( $parsedAuth ) {
 }
 ```
 
-#### Method: AuthorizationPartParser->__construct
+#### Method: AuthorizationHeaderParser->__construct
 
 ```php
 function __construct([ ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPartFactory $factory = null])
@@ -54,7 +54,7 @@ function __construct([ ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPart
 
 ---
 
-#### Method: AuthorizationPartParser->parseString
+#### Method: AuthorizationHeaderParser->parseString
 
 ```php
 function parseString(string $headerValue) : ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface
@@ -73,7 +73,7 @@ Reasons for failure include empty string and non-RFC7235 compliant header values
 
 ---
 
-#### Method: AuthorizationPartParser->parseServerRequest
+#### Method: AuthorizationHeaderParser->parseServerRequest
 
 ```php
 function parseServerRequest(\Psr\Http\Message\ServerRequestInterface $request [, string $headerName = self::DEFAULT_HEADER]) : ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface

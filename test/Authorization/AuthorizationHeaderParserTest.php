@@ -5,7 +5,7 @@ namespace Corpus\HttpMessageUtils\Authorization;
 use GuzzleHttp\Psr7\ServerRequest;
 use PHPUnit\Framework\TestCase;
 
-class AuthorizationPartParserTest extends TestCase {
+class AuthorizationHeaderParserTest extends TestCase {
 
 	/**
 	 * @dataProvider authorizationProvider
@@ -15,7 +15,7 @@ class AuthorizationPartParserTest extends TestCase {
 		?string $type,
 		?string $credentials = null
 	) : void {
-		$parser = new AuthorizationPartParser;
+		$parser = new AuthorizationHeaderParser;
 		$result = $parser->parseString($header);
 
 		if( $type === null ) {
@@ -36,7 +36,7 @@ class AuthorizationPartParserTest extends TestCase {
 		?string $type,
 		?string $credentials = null
 	) : void {
-		$parser  = new AuthorizationPartParser;
+		$parser  = new AuthorizationHeaderParser;
 		$request = new ServerRequest("POST", "https://example.com", [
 			'Authorization' => $header,
 		]);
@@ -54,7 +54,7 @@ class AuthorizationPartParserTest extends TestCase {
 	}
 
 	public function testParseServerRequest_noHeader() : void {
-		$parser  = new AuthorizationPartParser;
+		$parser  = new AuthorizationHeaderParser;
 		$request = new ServerRequest("GET", "https://example.com");
 
 		$result = $parser->parseServerRequest($request);
