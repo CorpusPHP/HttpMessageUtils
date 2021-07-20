@@ -16,7 +16,10 @@
 			</section>
 
 			<section title="Documentation">
-				<recursiveDirectory name="src"/>
+				<recursiveDirectory name="src" file-filter="/.*
+					(?&lt;!Factory\.php)
+					(?&lt;!AuthorizationParts\.php)
+					$/x"/>
 			</section>
 		</section>
 	</docpage>

@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/corpus/http-message-utils/version)](https://packagist.org/packages/corpus/http-message-utils)
 [![License](https://poser.pugx.org/corpus/http-message-utils/license)](https://packagist.org/packages/corpus/http-message-utils)
-[![Build Status](https://github.com/CorpusPHP/HttpMessageUtils/workflows/CI/badge.svg?)](https://github.com/CorpusPHP/HttpMessageUtils/actions?query=workflow%3ACI)
+[![CI](https://github.com/CorpusPHP/HttpMessageUtils/workflows/CI/badge.svg?)](https://github.com/CorpusPHP/HttpMessageUtils/actions?query=workflow%3ACI)
 
 
 Utilities for working with [PSR-7 Http Message](https://www.php-fig.org/psr/psr-7/) objects.
@@ -21,6 +21,97 @@ composer require 'corpus/http-message-utils'
 ```
 
 ## Documentation
+
+### Class: \Corpus\HttpMessageUtils\Authorization\AuthorizationHeaderParser
+
+Utility to split an Authorization header into `<type>` and `<credentials>` ala:
+`Authorization: <type> <credentials>`
+
+The parser itself is authorization type agnostic and works with any RFC7235
+conforming authorization type.
+
+### Example:
+
+```php
+$serverRequest = \GuzzleHttp\Psr7\ServerRequest::fromGlobals();
+$parsedAuth    = (new \Corpus\HttpMessageUtils\Authorization\AuthorizationHeaderParser)->parseServerRequest($serverRequest);
+
+if( $parsedAuth ) {
+    echo 'type: ' . $parsedAuth->getType();
+    echo 'cred: ' . $parsedAuth->getCredentials();
+}
+```
+
+#### Method: AuthorizationHeaderParser->__construct
+
+```php
+function __construct([ ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsFactory $factory = null])
+```
+
+##### Parameters:
+
+- ***\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsFactory*** | ***null*** `$factory` - Optional factory for construction of result objects
+
+---
+
+#### Method: AuthorizationHeaderParser->parseString
+
+```php
+function parseString(string $headerValue) : ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface
+```
+
+Parses an Authorization header into `<type>` and `<credentials>`
+
+##### Parameters:
+
+- ***string*** `$headerValue` - The header value to parse
+
+##### Returns:
+
+- ***\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface*** | ***null*** - AuthorizationParts on success, null on failure.
+Reasons for failure include empty string and non-RFC7235 compliant header values.
+
+---
+
+#### Method: AuthorizationHeaderParser->parseServerRequest
+
+```php
+function parseServerRequest(\Psr\Http\Message\ServerRequestInterface $request [, string $headerName = self::DEFAULT_HEADER]) : ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface
+```
+
+Helper to easily parse from a PSR ServerRequestInterface
+
+##### Parameters:
+
+- ***\Psr\Http\Message\ServerRequestInterface*** `$request` - The PSR ServerRequestInterface to read from
+- ***string*** `$headerName` - Optional header name to parse. Defaults to Authorization.
+
+##### Returns:
+
+- ***\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface*** | ***null*** - AuthorizationParts on success, null on failure.
+
+### Class: \Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface
+
+Representation of the parts of an Authorization Header:
+  `Authorization: <type> <credentials>`
+
+#### Method: AuthorizationPartsInterface->getType
+
+```php
+function getType() : string
+```
+
+The specified authorization type
+
+---
+
+#### Method: AuthorizationPartsInterface->getCredentials
+
+```php
+function getCredentials() : string
+```
+
+The specified authorization credentials
 
 ### Class: \Corpus\HttpMessageUtils\ProxyAwareSchemer
 
