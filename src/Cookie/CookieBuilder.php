@@ -2,8 +2,6 @@
 
 namespace Corpus\HttpMessageUtils\Cookie;
 
-use Psr\Http\Message\ResponseInterface;
-
 /**
  * Utility to build an HTTP Cookie header
  */
@@ -17,8 +15,6 @@ class CookieBuilder implements CookieInterface {
 	private bool $secure;
 	private bool $httpOnly;
 	private string $sameSite;
-
-	private CookieEncoder $encoder;
 
 	/**
 	 * @param string $name       The name of the cookie
@@ -39,7 +35,7 @@ class CookieBuilder implements CookieInterface {
 		string $domain = '',
 		bool $secure = false,
 		bool $httpOnly = false,
-		string $sameSite = "None"
+		string $sameSite = ''
 	) {
 		$this->name       = $name;
 		$this->value      = $value;
@@ -49,50 +45,6 @@ class CookieBuilder implements CookieInterface {
 		$this->secure     = $secure;
 		$this->httpOnly   = $httpOnly;
 		$this->sameSite   = $sameSite;
-
-		$this->encoder = new CookieEncoder;
-	}
-
-	/**
-	 * Apply the Cookie to `setcookie` a callable matching the signature of PHP 7.4+
-	 * `setcookie(string $name, string $value = "", array $options = []) : bool`
-	 *
-	 * @param callable|null $callee The `setcookie` compatible callback to be used.
-	 *                              If set to null, the default setcookie()
-	 */
-	public function apply( ?callable $callee = null ) : bool {
-		if( $callee === null ) {
-			$callee = '\\setcookie';
-		}
-
-		return $callee(
-			$this->name,
-			$this->value,
-			[
-				'expires'  => $this->expiration + time(),
-				'path'     => $this->path,
-				'domain'   => $this->domain,
-				'secure'   => $this->secure,
-				'httponly' => $this->httpOnly,
-				'samesite' => $this->sameSite,
-			],
-		);
-	}
-
-	/**
-	 * Given a \Psr\Http\Message\ResponseInterface returns a new instance of ResponseInterface with an added
-	 * `Set-Cookie` header representing this Cookie.
-	 */
-	public function responseWithHeaderAdded( ResponseInterface $response ) : ResponseInterface {
-		return $response->withAddedHeader('Set-Cookie', ($this->encoder)($this));
-	}
-
-	/**
-	 * Given a \Psr\Http\Message\ResponseInterface returns a new instance of ResponseInterface replacing any
-	 * `Set-Cookie` headers with one representing this Cookie.
-	 */
-	public function responseWithHeader( ResponseInterface $response ) : ResponseInterface {
-		return $response->withHeader('Set-Cookie', ($this->encoder)($this));
 	}
 
 	/**
