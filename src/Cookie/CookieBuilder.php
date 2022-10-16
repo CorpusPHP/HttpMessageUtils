@@ -54,10 +54,17 @@ class CookieBuilder implements CookieInterface {
 	}
 
 	/**
-	 * Apply the Cookie to a callable matching the signature of PHP 7.4+
+	 * Apply the Cookie to `setcookie` a callable matching the signature of PHP 7.4+
 	 * `setcookie(string $name, string $value = "", array $options = []) : bool`
+	 *
+	 * @param callable|null $callee The `setcookie` compatible callback to be used.
+	 *                              If set to null, the default setcookie()
 	 */
-	public function apply( callable $callee = "\\setcookie" ) : bool {
+	public function apply( ?callable $callee = null ) : bool {
+		if( $callee === null ) {
+			$callee = '\\setcookie';
+		}
+
 		return $callee(
 			$this->name,
 			$this->value,
