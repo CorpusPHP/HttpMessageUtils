@@ -1,16 +1,13 @@
 <?php
 
-namespace Corpus\HttpMessageUtils;
+namespace Corpus\HttpMessageUtils\Cookie;
 
 use Psr\Http\Message\ResponseInterface;
 
 /**
  * Utility to build an HTTP Cookie header
- *
- * Inspired by and partly based on `hansott/psr7-cookies`
- * MIT License Copyright (c) 2017 Hans Ott hansott@hotmail.be
  */
-class CookieBuilder {
+class CookieBuilder implements CookieInterface {
 
 	private string $name;
 	private string $value;
@@ -20,6 +17,8 @@ class CookieBuilder {
 	private bool $secure;
 	private bool $httpOnly;
 	private string $sameSite;
+
+	private CookieEncoder $encoder;
 
 	/**
 	 * @param string $name       The name of the cookie
@@ -50,6 +49,8 @@ class CookieBuilder {
 		$this->secure     = $secure;
 		$this->httpOnly   = $httpOnly;
 		$this->sameSite   = $sameSite;
+
+		$this->encoder = new CookieEncoder;
 	}
 
 	/**
@@ -76,7 +77,7 @@ class CookieBuilder {
 	 * `Set-Cookie` header representing this Cookie.
 	 */
 	public function responseWithHeaderAdded( ResponseInterface $response ) : ResponseInterface {
-		return $response->withAddedHeader('Set-Cookie', $this->toHeaderValue());
+		return $response->withAddedHeader('Set-Cookie', ($this->encoder)($this));
 	}
 
 	/**
@@ -84,7 +85,7 @@ class CookieBuilder {
 	 * `Set-Cookie` headers with one representing this Cookie.
 	 */
 	public function responseWithHeader( ResponseInterface $response ) : ResponseInterface {
-		return $response->withHeader('Set-Cookie', $this->toHeaderValue());
+		return $response->withHeader('Set-Cookie', ($this->encoder)($this));
 	}
 
 	/**
@@ -180,96 +181,36 @@ class CookieBuilder {
 		return $that;
 	}
 
-	/**
-	 * Get the cookie name.
-	 */
 	public function getName() : string {
 		return $this->name;
 	}
 
-	/**
-	 * Get the cookie value.
-	 */
 	public function getValue() : string {
 		return $this->value;
 	}
 
-	/**
-	 * Get the cookie expiration.
-	 */
 	public function getExpiration() : int {
 		return $this->expiration;
 	}
 
-	/**
-	 * Get the cookie path.
-	 */
 	public function getPath() : string {
 		return $this->path;
 	}
 
-	/**
-	 * Get the cookie domain.
-	 */
 	public function getDomain() : string {
 		return $this->domain;
 	}
 
-	/**
-	 * Get the cookie secure flag.
-	 */
 	public function isSecure() : bool {
 		return $this->secure;
 	}
 
-	/**
-	 * Get the cookie httpOnly flag.
-	 */
 	public function isHttpOnly() : bool {
 		return $this->httpOnly;
 	}
 
-	/**
-	 * Get the cookie SameSite value.
-	 */
 	public function getSameSite() : string {
 		return $this->sameSite;
-	}
-
-	/**
-	 * Get the cookie as a header value.
-	 */
-	public function toHeaderValue() : string {
-		$headerValue = sprintf('%s=%s', $this->name, urlencode($this->value));
-
-		if( $this->expiration !== 0 ) {
-			$headerValue .= sprintf(
-				'; expires=%s',
-				gmdate(DATE_RFC1123, time() + $this->expiration)
-			);
-		}
-
-		if( $this->path ) {
-			$headerValue .= sprintf('; path=%s', $this->path);
-		}
-
-		if( $this->domain ) {
-			$headerValue .= sprintf('; domain=%s', $this->domain);
-		}
-
-		if( $this->secure ) {
-			$headerValue .= '; secure';
-		}
-
-		if( $this->httpOnly ) {
-			$headerValue .= '; httponly';
-		}
-
-		if( $this->sameSite ) {
-			$headerValue .= sprintf('; samesite=%s', $this->sameSite);
-		}
-
-		return $headerValue;
 	}
 
 }
