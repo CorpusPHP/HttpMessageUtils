@@ -27,8 +27,10 @@ class CookieBuilder {
 	 * @param string $path       The path on which this cookie is available
 	 * @param string $domain     The domain to which the cookie is sent
 	 * @param bool   $secure     Indicates that the cookie should only be transmitted over a secure HTTPS connection
-	 * @param bool   $httpOnly   When true the cookie will be made accessible only through the HTTP protocol, e.g. Not JavaScript
-	 * @param string $sameSite   Set the SameSite value - expects "None", "Lax" or "Strict". If the samesite element is empty, no SameSite cookie attribute is set
+	 * @param bool   $httpOnly   When true the cookie will be made accessible only through the HTTP protocol, e.g. Not
+	 *                           JavaScript
+	 * @param string $sameSite   Set the SameSite value - expects "None", "Lax" or "Strict". If the samesite element is
+	 *                           empty, no SameSite cookie attribute is set
 	 */
 	public function __construct(
 		string $name,
@@ -69,21 +71,35 @@ class CookieBuilder {
 		);
 	}
 
+	/**
+	 * Given a \Psr\Http\Message\ResponseInterface returns a new instance of ResponseInterface with an added
+	 * `Set-Cookie` header representing this Cookie.
+	 */
 	public function responseWithHeaderAdded( ResponseInterface $response ) : ResponseInterface {
 		return $response->withAddedHeader('Set-Cookie', $this->toHeaderValue());
 	}
 
+	/**
+	 * Given a \Psr\Http\Message\ResponseInterface returns a new instance of ResponseInterface replacing any
+	 * `Set-Cookie` headers with one representing this Cookie.
+	 */
 	public function responseWithHeader( ResponseInterface $response ) : ResponseInterface {
 		return $response->withHeader('Set-Cookie', $this->toHeaderValue());
 	}
 
+	/**
+	 * Return an instance with the specified name.
+	 */
 	public function withName( string $name ) : self {
-		$clone = clone $this;
+		$clone       = clone $this;
 		$clone->name = $name;
 
 		return $clone;
 	}
 
+	/**
+	 * Return an instance with the specified value.
+	 */
 	public function withValue( string $value ) : self {
 		$that        = clone $this;
 		$that->value = $value;
@@ -92,7 +108,7 @@ class CookieBuilder {
 	}
 
 	/**
-	 * Expire the cookie NOW and invoke it.
+	 * Return an instance with an expiration in the past and a cleared value.
 	 */
 	public function withExpireNow() : self {
 		$that             = clone $this;
@@ -102,6 +118,11 @@ class CookieBuilder {
 		return $that;
 	}
 
+	/**
+	 * Return an instance with the specified duration.
+	 *
+	 * @param int $expiration The number of seconds for which this cookie will be valid. `time() + $expiration`
+	 */
 	public function withExpiration( int $expiration ) : self {
 		$that             = clone $this;
 		$that->expiration = $expiration;
@@ -109,6 +130,9 @@ class CookieBuilder {
 		return $that;
 	}
 
+	/**
+	 * Return an instance with the specified path.
+	 */
 	public function withPath( string $path ) : self {
 		$that       = clone $this;
 		$that->path = $path;
@@ -116,6 +140,9 @@ class CookieBuilder {
 		return $that;
 	}
 
+	/**
+	 * Return an instance with the specified domain.
+	 */
 	public function withDomain( string $domain ) : self {
 		$that         = clone $this;
 		$that->domain = $domain;
@@ -123,6 +150,9 @@ class CookieBuilder {
 		return $that;
 	}
 
+	/**
+	 * Return an instance with the specified secure flag.
+	 */
 	public function withSecure( bool $secure ) : self {
 		$that         = clone $this;
 		$that->secure = $secure;
@@ -130,6 +160,9 @@ class CookieBuilder {
 		return $that;
 	}
 
+	/**
+	 * Return an instance with the specified httpOnly flag.
+	 */
 	public function withHttpOnly( bool $httpOnly ) : self {
 		$that           = clone $this;
 		$that->httpOnly = $httpOnly;
@@ -137,6 +170,9 @@ class CookieBuilder {
 		return $that;
 	}
 
+	/**
+	 * Return an instance with the specified SameSite value.
+	 */
 	public function withSameSite( string $sameSite ) : self {
 		$that           = clone $this;
 		$that->sameSite = $sameSite;
@@ -144,38 +180,65 @@ class CookieBuilder {
 		return $that;
 	}
 
+	/**
+	 * Get the cookie name.
+	 */
 	public function getName() : string {
 		return $this->name;
 	}
 
-	public function getExpiration() : int {
-		return $this->expiration;
-	}
-
-	public function getPath() : string {
-		return $this->path;
-	}
-
-	public function getDomain() : string {
-		return $this->domain;
-	}
-
-	public function isSecure() : bool {
-		return $this->secure;
-	}
-
-	public function isHttpOnly() : bool {
-		return $this->httpOnly;
-	}
-
-	public function getSameSite() : string {
-		return $this->sameSite;
-	}
-
+	/**
+	 * Get the cookie value.
+	 */
 	public function getValue() : string {
 		return $this->value;
 	}
 
+	/**
+	 * Get the cookie expiration.
+	 */
+	public function getExpiration() : int {
+		return $this->expiration;
+	}
+
+	/**
+	 * Get the cookie path.
+	 */
+	public function getPath() : string {
+		return $this->path;
+	}
+
+	/**
+	 * Get the cookie domain.
+	 */
+	public function getDomain() : string {
+		return $this->domain;
+	}
+
+	/**
+	 * Get the cookie secure flag.
+	 */
+	public function isSecure() : bool {
+		return $this->secure;
+	}
+
+	/**
+	 * Get the cookie httpOnly flag.
+	 */
+	public function isHttpOnly() : bool {
+		return $this->httpOnly;
+	}
+
+	/**
+	 * Get the cookie SameSite value.
+	 */
+	public function getSameSite() : string {
+		return $this->sameSite;
+	}
+
+	/**
+	 * Get the cookie as a header value.
+	 */
 	public function toHeaderValue() : string {
 		$headerValue = sprintf('%s=%s', $this->name, urlencode($this->value));
 
