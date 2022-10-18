@@ -179,7 +179,7 @@ Passing null will leave port as-is.
 function withDetectedScheme(\Psr\Http\Message\UriInterface $uri [, bool $detectPort = true [, ?int $defaultOnHttps = self::REMOVE_PORT]]) : \Psr\Http\Message\UriInterface
 ```
 
-Given a \Psr\Http\Message\UriInterface returns a instance of UriInterface having the scheme adjusted to match  
+Given a \Psr\Http\Message\UriInterface returns an instance of UriInterface having the scheme adjusted to match  
 the detected external scheme as defined by the proxies headers.
 
 ##### Parameters:
@@ -198,7 +198,7 @@ Passing null will leave port as-is.
 function withDetectedPort(\Psr\Http\Message\UriInterface $uri [, ?int $default = null]) : \Psr\Http\Message\UriInterface
 ```
 
-Given a \Psr\Http\Message\UriInterface returns a instance of UriInterface having the port adjusted to match  
+Given a \Psr\Http\Message\UriInterface returns an instance of UriInterface having the port adjusted to match  
 the detected external scheme as defined by the proxies headers.
 
 ##### Parameters:

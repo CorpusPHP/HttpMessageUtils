@@ -89,7 +89,7 @@ class ProxyAwareSchemer {
 	}
 
 	/**
-	 * Given a \Psr\Http\Message\UriInterface returns a instance of UriInterface having the scheme adjusted to match
+	 * Given a \Psr\Http\Message\UriInterface returns an instance of UriInterface having the scheme adjusted to match
 	 * the detected external scheme as defined by the proxies headers.
 	 *
 	 * @param bool     $detectPort     Enable / Disable proxy port sniffing.
@@ -117,7 +117,7 @@ class ProxyAwareSchemer {
 	}
 
 	/**
-	 * Given a \Psr\Http\Message\UriInterface returns a instance of UriInterface having the port adjusted to match
+	 * Given a \Psr\Http\Message\UriInterface returns an instance of UriInterface having the port adjusted to match
 	 * the detected external scheme as defined by the proxies headers.
 	 *
 	 * @param int|null $default Defines a default fallback port.
