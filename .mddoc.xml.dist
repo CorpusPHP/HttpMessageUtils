@@ -18,6 +18,7 @@
 			<section title="Documentation">
 				<recursiveDirectory name="src" file-filter="/.*
 					(?&lt;!Factory\.php)
+					(?&lt;!Interface\.php)
 					(?&lt;!AuthorizationParts\.php)
 					$/x"/>
 			</section>
