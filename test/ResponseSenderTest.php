@@ -23,12 +23,17 @@ class ResponseSenderTest extends TestCase {
 			$version = '1.1'
 		);
 
+		$response = $response->withHeader('X-Test', 'test')
+			->withAddedHeader('X-Test', 'test2')
+			->withAddedHeader('X-Test', 'test3');
+
 		$sent_headers = [];
 		$header       = $this->getFunctionMock(__NAMESPACE__, 'header');
 
-		$header->expects($this->any())->willReturnCallback(function ( $header, $replace ) use ( &$sent_headers ) {
-			return $sent_headers[] = $header;
-		});
+		$header->expects($this->any())
+			->willReturnCallback(function ( $header, $replace ) use ( &$sent_headers ) {
+				return $sent_headers[] = [ $header, $replace ];
+			});
 
 		$sender = new ResponseSender($fullStmt);
 
@@ -36,16 +41,18 @@ class ResponseSenderTest extends TestCase {
 		$sender->send($response);
 		$output = ob_get_clean();
 
+		$expectedHeaders = [
+			[ 'Content-Type: text/plain', true ],
+			[ 'X-Test: test', true ],
+			[ 'X-Test: test2', false ],
+			[ 'X-Test: test3', false ],
+		];
+
 		if( $fullStmt ) {
-			$this->assertSame([
-				"HTTP/$version $status OK",
-				"Content-Type: text/plain",
-			], $sent_headers);
-		} else {
-			$this->assertSame([
-				"Content-Type: text/plain",
-			], $sent_headers);
+			array_unshift($expectedHeaders, ["HTTP/$version $status OK", true]);
 		}
+
+		$this->assertSame($expectedHeaders, $sent_headers);
 
 		$this->assertSame($body, $output);
 	}
