@@ -62,12 +62,17 @@ class ResponseSender {
 			http_response_code($response->getStatusCode());
 		}
 
+		$sentHeaders = [];
 		foreach( $response->getHeaders() as $name => $values ) {
 			foreach( $values as $value ) {
+				$lower = strtolower($name);
+
 				header(
 					sprintf("%s: %s", $name, $value),
-					false
+					!isset($sentHeaders[$lower])
 				);
+
+				$sentHeaders[$lower] = true;
 			}
 		}
 
