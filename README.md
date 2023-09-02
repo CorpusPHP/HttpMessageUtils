@@ -2,14 +2,14 @@
 
 [![Latest Stable Version](https://poser.pugx.org/corpus/http-message-utils/version)](https://packagist.org/packages/corpus/http-message-utils)
 [![License](https://poser.pugx.org/corpus/http-message-utils/license)](https://packagist.org/packages/corpus/http-message-utils)
-[![CI](https://github.com/CorpusPHP/HttpMessageUtils/workflows/CI/badge.svg?)](https://github.com/CorpusPHP/HttpMessageUtils/actions?query=workflow%3ACI)
+[![ci.yml](https://github.com/CorpusPHP/HttpMessageUtils/actions/workflows/ci.yml/badge.svg?)](https://github.com/CorpusPHP/HttpMessageUtils/actions/workflows/ci.yml)
 
 
 Utilities for working with [PSR-7 Http Message](https://www.php-fig.org/psr/psr-7/) objects.
 
 ## Requirements
 
-- **psr/http-message**: ^1.0
+- **psr/http-message**: ^1 || ^2
 - **php**: >=7.2
 
 ## Installing

@@ -5,7 +5,7 @@
 		<section title="HTTP Message Utils">
 			<badge-poser type="version"/>
 			<badge-poser type="license"/>
-			<badge-github-action name="CorpusPHP/HttpMessageUtils" workflow="CI"/>
+			<badge-github-action name="CorpusPHP/HttpMessageUtils" workflow-file="ci.yml"/>
 			<text>Utilities for working with [PSR-7 Http Message](https://www.php-fig.org/psr/psr-7/) objects.</text>
 
 			<section title="Requirements">
@@ -16,7 +16,7 @@
 			</section>
 
 			<section title="Documentation">
-				<recursiveDirectory name="src" file-filter="/.*
+				<recursive-directory name="src" file-filter="/.*
 					(?&lt;!Factory\.php)
 					(?&lt;!AuthorizationParts\.php)
 					$/x"/>
