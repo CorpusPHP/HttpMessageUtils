@@ -12,6 +12,14 @@ jobs:
       matrix:
         operating-system: [ ubuntu-latest ]
         php-versions: [ '7.2', '7.3', '7.4', '8.0', '8.1', '8.2' ]
+        psr-http-versions: [ '~1.0.0', '^1', '^2' ]
+        exclude:
+          - php-versions: '7.2'
+            psr-http-versions: '^2'
+          - php-versions: '7.3'
+            psr-http-versions: '^2'
+          - php-versions: '7.4'
+            psr-http-versions: '^2'
 
     runs-on: ${{ matrix.operating-system }}
 
@@ -26,6 +34,11 @@ jobs:
 
       - name: Install dependencies with composer
         run: composer install
+
+      - name: Install PSR HTTP Message
+        run: |
+          rm composer.lock
+          composer require --with-all-dependencies psr/http-message:${{ matrix.psr-http-versions }}
 
       - name: Run tests
         run: make test
