@@ -58,7 +58,7 @@ class AuthorizationHeaderParser {
 		}
 
 		$result = preg_split('/\s+/', $headerValue, 2, PREG_SPLIT_NO_EMPTY);
-		if( count($result) === 2 ) {
+		if( $result && count($result) === 2 ) {
 			return $this->factory->make($result[0], $result[1]);
 		}
 
