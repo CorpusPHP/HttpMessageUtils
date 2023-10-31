@@ -11,6 +11,7 @@ fix: cbf
 test: cs
 	vendor/bin/phpunit
 	vendor/bin/php-cs-fixer fix --dry-run
+	vendor/bin/phpstan
 
 .PHONY: cs
 cs:
