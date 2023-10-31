@@ -9,7 +9,7 @@
 	"require-dev": {
 		"phpunit/phpunit": "^9.6.13",
 		"php-mock/php-mock-phpunit": "^2.7",
-		"guzzlehttp/psr7": "^2.4",
+		"guzzlehttp/psr7": "^2.6",
 		"corpus/coding-standard": "^0.6.0",
 		"squizlabs/php_codesniffer": "^3.7",
 		"friendsofphp/php-cs-fixer": "^3.4",
