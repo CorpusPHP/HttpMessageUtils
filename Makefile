@@ -1,6 +1,6 @@
 SRC_FILES = $(shell find src -type f -name '*.php')
 
-README.md: $(SRC_FILES) .mddoc.xml.dist
+README.md: $(SRC_FILES) composer.json .mddoc.xml.dist
 	vendor/bin/mddoc
 
 .PHONY: fix
