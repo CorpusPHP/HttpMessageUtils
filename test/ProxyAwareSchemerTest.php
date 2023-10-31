@@ -45,6 +45,7 @@ class ProxyAwareSchemerTest extends TestCase {
 
 	/**
 	 * @dataProvider linkServerPortProvider
+	 * @param array<string,scalar> $server
 	 */
 	public function test_forwarded_port(
 		string $expected,

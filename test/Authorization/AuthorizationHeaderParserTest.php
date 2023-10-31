@@ -24,6 +24,8 @@ class AuthorizationHeaderParserTest extends TestCase {
 			return;
 		}
 
+		$this->assertNotNull($result);
+
 		$this->assertSame($type, $result->getType());
 		$this->assertSame($credentials, $result->getCredentials());
 	}
@@ -48,6 +50,8 @@ class AuthorizationHeaderParserTest extends TestCase {
 
 			return;
 		}
+
+		$this->assertNotNull($result);
 
 		$this->assertSame($type, $result->getType());
 		$this->assertSame($credentials, $result->getCredentials());

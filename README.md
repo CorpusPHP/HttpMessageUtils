@@ -147,10 +147,10 @@ function __construct([ ?array $server = null [, ?array $proxyServerHttpsKeyValue
 
 ##### Parameters:
 
-- ***array*** | ***null*** `$server` - Server array to inspect. Defaults to $_SERVER.
-- ***array*** | ***null*** `$proxyServerHttpsKeyValues` - Map of $_SERVER keys to their expected https-positive value.
+- ***array<string,scalar>*** `$server` - Server array to inspect. Defaults to $_SERVER.
+- ***array<string,string>*** | ***null*** `$proxyServerHttpsKeyValues` - Map of $_SERVER keys to their expected https-positive value.
 Defaults to ProxyAwareSchemer::HTTPS_EXPECTED_SERVER_VALUES
-- ***string[]*** | ***null*** `$` - Array of $_SERVER keys to check for a forwarded port value.
+- ***string[]*** | ***null*** `$proxyServerPortKeys` - Array of $_SERVER keys to check for a forwarded port value.
 
 ---
 
