@@ -20,7 +20,7 @@ use Psr\Http\Message\UriInterface;
  */
 class ProxyAwareSchemer {
 
-	/** @var array */
+	/** @var array<string,scalar> */
 	private $server;
 
 	public const HTTPS_EXPECTED_SERVER_VALUES = [
@@ -39,19 +39,19 @@ class ProxyAwareSchemer {
 	/** Value for `default port` arguments to remove the port from the URI */
 	public const REMOVE_PORT = -65536;
 
-	/** @var array|string[] */
+	/** @var array<string,string> */
 	private $proxyServerHttpsKeyValues;
 
 	/** @var string[] */
 	private $proxyServerPortKeys;
 
 	/**
-	 * @param array|null $server Server array to inspect. Defaults to $_SERVER.
+	 * @param array<string,scalar> $server Server array to inspect. Defaults to $_SERVER.
 	 *
-	 * @param array|null $proxyServerHttpsKeyValues Map of $_SERVER keys to their expected https-positive value.
-	 *                                              Defaults to ProxyAwareSchemer::HTTPS_EXPECTED_SERVER_VALUES
+	 * @param array<string,string>|null $proxyServerHttpsKeyValues Map of $_SERVER keys to their expected https-positive value.
+	 *                                                             Defaults to ProxyAwareSchemer::HTTPS_EXPECTED_SERVER_VALUES
 	 *
-	 * @param string[]|null Array of $_SERVER keys to check for a forwarded port value.
+	 * @param string[]|null $proxyServerPortKeys Array of $_SERVER keys to check for a forwarded port value.
 	 */
 	public function __construct(
 		?array $server = null,
@@ -105,7 +105,7 @@ class ProxyAwareSchemer {
 	) : UriInterface {
 		foreach( $this->proxyServerHttpsKeyValues as $serverKey => $serverValue ) {
 			if( isset($this->server[$serverKey])
-				&& strtolower($this->server[$serverKey]) === $serverValue
+				&& strtolower((string)$this->server[$serverKey]) === $serverValue
 			) {
 				$newUri = $uri->withScheme('https');
 

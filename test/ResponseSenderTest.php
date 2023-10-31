@@ -19,7 +19,7 @@ class ResponseSenderTest extends TestCase {
 			$headers = [
 				'Content-Type' => 'text/plain',
 			],
-			$body = uniqid(true, true),
+			$body = uniqid('test_', true),
 			$version = '1.1'
 		);
 
