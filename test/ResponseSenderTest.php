@@ -35,6 +35,13 @@ class ResponseSenderTest extends TestCase {
 				return $sent_headers[] = [ $header, $replace ];
 			});
 
+		if( !$fullStmt ) {
+			$http_response_code = $this->getFunctionMock(__NAMESPACE__, 'http_response_code');
+			$http_response_code
+				->expects($this->once())
+				->with($status);
+		}
+
 		$sender = new ResponseSender($fullStmt);
 
 		ob_start();
@@ -49,7 +56,7 @@ class ResponseSenderTest extends TestCase {
 		];
 
 		if( $fullStmt ) {
-			array_unshift($expectedHeaders, ["HTTP/$version $status OK", true]);
+			array_unshift($expectedHeaders, [ "HTTP/$version $status OK", true ]);
 		}
 
 		$this->assertSame($expectedHeaders, $sent_headers);
