@@ -2,7 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/corpus/http-message-utils/version)](https://packagist.org/packages/corpus/http-message-utils)
 [![License](https://poser.pugx.org/corpus/http-message-utils/license)](https://packagist.org/packages/corpus/http-message-utils)
-[![ci.yml](https://github.com/CorpusPHP/HttpMessageUtils/actions/workflows/ci.yml/badge.svg?)](https://github.com/CorpusPHP/HttpMessageUtils/actions/workflows/ci.yml)
+[![ci.yml](https://github.com/CorpusPHP/HttpMessageUtils/actions/workflows/ci.yml/badge.svg)](https://github.com/CorpusPHP/HttpMessageUtils/actions/workflows/ci.yml)
 
 
 Utilities for working with [PSR-7 Http Message](https://www.php-fig.org/psr/psr-7/) objects.
@@ -22,7 +22,7 @@ composer require 'corpus/http-message-utils'
 
 ## Documentation
 
-### Class: \Corpus\HttpMessageUtils\Authorization\AuthorizationHeaderParser
+### Class: Corpus\HttpMessageUtils\Authorization\AuthorizationHeaderParser
 
 Utility to split an Authorization header into `<type>` and `<credentials>` ala:
 `Authorization: <type> <credentials>`
@@ -90,7 +90,7 @@ Helper to easily parse from a PSR ServerRequestInterface
 
 - ***\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface*** | ***null*** - AuthorizationParts on success, null on failure.
 
-### Class: \Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface
+### Class: Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface
 
 Representation of the parts of an Authorization Header:
   `Authorization: <type> <credentials>`
@@ -113,7 +113,7 @@ function getCredentials() : string
 
 The specified authorization credentials
 
-### Class: \Corpus\HttpMessageUtils\ProxyAwareSchemer
+### Class: Corpus\HttpMessageUtils\ProxyAwareSchemer
 
 Utility to map a Uri or ServerRequestInterface's Uri to the external scheme
 detected from a proxy such as an AWS load balancer.
@@ -207,7 +207,7 @@ the detected external scheme as defined by the proxies headers.
 Passing ProxyAwareSchemer::REMOVE_PORT will default to removing the port information.
 Defaults to null - null leaves port as-is.
 
-### Class: \Corpus\HttpMessageUtils\ResponseSender
+### Class: Corpus\HttpMessageUtils\ResponseSender
 
 Utility to actualize a PSR7 ResponseInterface
 
