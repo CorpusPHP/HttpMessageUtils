@@ -15,7 +15,7 @@
 		"friendsofphp/php-cs-fixer": "^3.4",
 		"donatj/mddoc": "^0.10.1",
 		"donatj/drop": "^1.1",
-		"phpstan/phpstan": "^1.12"
+		"phpstan/phpstan": "^2.1.18"
 	},
 	"license": "MIT",
 	"authors": [
