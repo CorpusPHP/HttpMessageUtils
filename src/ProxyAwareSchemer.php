@@ -20,7 +20,7 @@ use Psr\Http\Message\UriInterface;
  */
 class ProxyAwareSchemer {
 
-	/** @var array<string,scalar> */
+	/** @var array<string,mixed> */
 	private $server;
 
 	public const HTTPS_EXPECTED_SERVER_VALUES = [
