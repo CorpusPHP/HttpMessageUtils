@@ -20,7 +20,7 @@ use Psr\Http\Message\UriInterface;
  */
 class ProxyAwareSchemer {
 
-	/** @var array<string,scalar> */
+	/** @var array<string,mixed> */
 	private $server;
 
 	public const HTTPS_EXPECTED_SERVER_VALUES = [
@@ -46,7 +46,7 @@ class ProxyAwareSchemer {
 	private $proxyServerPortKeys;
 
 	/**
-	 * @param array<string,scalar> $server Server array to inspect. Defaults to $_SERVER.
+	 * @param array<string,mixed> $server Server array to inspect. Defaults to $_SERVER.
 	 *
 	 * @param array<string,string>|null $proxyServerHttpsKeyValues Map of $_SERVER keys to their expected https-positive value.
 	 *                                                             Defaults to ProxyAwareSchemer::HTTPS_EXPECTED_SERVER_VALUES
