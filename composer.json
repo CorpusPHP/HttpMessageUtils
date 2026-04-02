@@ -3,7 +3,7 @@
 	"description": "Utilities for working with Psr7 Http Messages",
 	"type": "library",
 	"require": {
-		"psr/http-message": "^1 || ^2",
+		"psr/http-message": "^1.1 || ^2.0",
 		"php": ">=7.3"
 	},
 	"require-dev": {
