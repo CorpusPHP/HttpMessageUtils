@@ -20,7 +20,7 @@ use Psr\Http\Message\UriInterface;
  */
 class ProxyAwareSchemer {
 
-	/** @var array<string,scalar> */
+	/** @var array<string, mixed> */
 	private $server;
 
 	public const HTTPS_EXPECTED_SERVER_VALUES = [
@@ -46,9 +46,9 @@ class ProxyAwareSchemer {
 	private $proxyServerPortKeys;
 
 	/**
-	 * @param array<string,scalar> $server Server array to inspect. Defaults to $_SERVER.
+	 * @param array<string, mixed>|null $server Server array to inspect. Defaults to $_SERVER.
 	 *
-	 * @param array<string,string>|null $proxyServerHttpsKeyValues Map of $_SERVER keys to their expected https-positive value.
+	 * @param array<string, string>|null $proxyServerHttpsKeyValues Map of $_SERVER keys to their expected https-positive value.
 	 *                                                             Defaults to ProxyAwareSchemer::HTTPS_EXPECTED_SERVER_VALUES
 	 *
 	 * @param string[]|null $proxyServerPortKeys Array of $_SERVER keys to check for a forwarded port value.
@@ -105,6 +105,7 @@ class ProxyAwareSchemer {
 	) : UriInterface {
 		foreach( $this->proxyServerHttpsKeyValues as $serverKey => $serverValue ) {
 			if( isset($this->server[$serverKey])
+				&& is_scalar($this->server[$serverKey])
 				&& strtolower((string)$this->server[$serverKey]) === $serverValue
 			) {
 				$newUri = $uri->withScheme('https');
@@ -126,7 +127,7 @@ class ProxyAwareSchemer {
 	 */
 	public function withDetectedPort( UriInterface $uri, ?int $default = null ) : UriInterface {
 		foreach( $this->proxyServerPortKeys as $portKey ) {
-			if( isset($this->server[$portKey]) ) {
+			if( isset($this->server[$portKey]) && is_numeric($this->server[$portKey]) ) {
 				$port = (int)$this->server[$portKey];
 				if( $port > 0 && $port <= 65535 ) {
 					return $uri->withPort($port);
