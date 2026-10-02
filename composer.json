@@ -13,7 +13,7 @@
 		"corpus/coding-standard": "^0.10.0",
 		"squizlabs/php_codesniffer": "^4.0",
 		"friendsofphp/php-cs-fixer": "^3.95",
-		"donatj/mddoc": "^0.10.1",
+		"donatj/mddoc": "^0.11.1",
 		"donatj/drop": "^1.1",
 		"phpstan/phpstan": "^2.2"
 	},
