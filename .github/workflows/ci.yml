@@ -32,6 +32,9 @@ jobs:
       - name: Install dependencies with composer
         run: composer install
 
+      - name: Verify generated documentation
+        run: make test-docs
+
       - name: Install PSR HTTP Message
         run: |
           rm composer.lock

@@ -82,7 +82,7 @@ class ProxyAwareSchemer {
 		ServerRequestInterface $serverRequest,
 		bool $detectPort = true,
 		?int $defaultOnHttps = self::REMOVE_PORT
-	) : ServerRequestInterface {
+	): ServerRequestInterface {
 		return $serverRequest->withUri(
 			$this->withDetectedScheme($serverRequest->getUri(), $detectPort, $defaultOnHttps)
 		);
@@ -102,7 +102,7 @@ class ProxyAwareSchemer {
 		UriInterface $uri,
 		bool $detectPort = true,
 		?int $defaultOnHttps = self::REMOVE_PORT
-	) : UriInterface {
+	): UriInterface {
 		foreach( $this->proxyServerHttpsKeyValues as $serverKey => $serverValue ) {
 			if( isset($this->server[$serverKey])
 				&& is_scalar($this->server[$serverKey])
@@ -125,7 +125,7 @@ class ProxyAwareSchemer {
 	 *                          Passing ProxyAwareSchemer::REMOVE_PORT will default to removing the port information.
 	 *                          Defaults to null - null leaves port as-is.
 	 */
-	public function withDetectedPort( UriInterface $uri, ?int $default = null ) : UriInterface {
+	public function withDetectedPort( UriInterface $uri, ?int $default = null ): UriInterface {
 		foreach( $this->proxyServerPortKeys as $portKey ) {
 			if( isset($this->server[$portKey]) && is_numeric($this->server[$portKey]) ) {
 				$port = (int)$this->server[$portKey];

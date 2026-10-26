@@ -9,9 +9,9 @@ class ProxyAwareSchemerTest extends TestCase {
 
 	/**
 	 * @backupGlobals
-	 * @dataProvider positiveServerKeyProvider
 	 */
-	public function test_withDetectedScheme_https( string $key, string $value ) : void {
+	#[\PHPUnit\Framework\Attributes\DataProvider('positiveServerKeyProvider')]
+	public function test_withDetectedScheme_https( string $key, string $value ): void {
 		$request = new ServerRequest('GET', 'http://localhost');
 
 		$server                = [ $key => $value ];
@@ -24,7 +24,7 @@ class ProxyAwareSchemerTest extends TestCase {
 		$this->assertSame('https', $schemerPost->withUriWithDetectedScheme($request)->getUri()->getScheme());
 	}
 
-	public function test_withDetectedScheme_http() : void {
+	public function test_withDetectedScheme_http(): void {
 		$request = new ServerRequest('GET', 'http://localhost');
 
 		$server                = [];
@@ -37,23 +37,23 @@ class ProxyAwareSchemerTest extends TestCase {
 		$this->assertSame('http', $schemerPost->withUriWithDetectedScheme($request)->getUri()->getScheme());
 	}
 
-	public function positiveServerKeyProvider() : \Generator {
+	public static function positiveServerKeyProvider(): \Generator {
 		foreach( ProxyAwareSchemer::HTTPS_EXPECTED_SERVER_VALUES as $key => $val ) {
 			yield [ $key, $val ];
 		}
 	}
 
 	/**
-	 * @dataProvider linkServerPortProvider
 	 * @param array<string,scalar> $server
 	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('linkServerPortProvider')]
 	public function test_forwarded_port(
 		string $expected,
 		string $link,
 		array $server,
 		bool $detectPort = true,
 		int $default = ProxyAwareSchemer::REMOVE_PORT
-	) : void {
+	): void {
 		$request = new ServerRequest('GET', $link);
 
 		$schemer = new ProxyAwareSchemer($server);
@@ -61,7 +61,7 @@ class ProxyAwareSchemerTest extends TestCase {
 		$this->assertSame($expected, $schemer->withUriWithDetectedScheme($request, $detectPort, $default)->getUri()->__toString());
 	}
 
-	public function linkServerPortProvider() : \Generator {
+	public static function linkServerPortProvider(): \Generator {
 		yield 'protocol should stay the same 1' => [ 'https://test.example.com:8080/foo', 'https://test.example.com/foo', [ 'HTTP_X_FORWARDED_PORT' => 8080 ] ];
 		yield 'protocol should stay the same 2' => [ 'http://test.example.com:8080/foo', 'http://test.example.com/foo', [ 'HTTP_X_FORWARDED_PORT' => 8080 ] ];
 

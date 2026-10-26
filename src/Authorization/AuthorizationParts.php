@@ -14,11 +14,11 @@ class AuthorizationParts implements AuthorizationPartsInterface {
 		$this->credentials = $credentials;
 	}
 
-	public function getType() : string {
+	public function getType(): string {
 		return $this->type;
 	}
 
-	public function getCredentials() : string {
+	public function getCredentials(): string {
 		return $this->credentials;
 	}
 
