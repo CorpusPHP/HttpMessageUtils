@@ -45,10 +45,12 @@ if( $parsedAuth ) {
 #### Method: AuthorizationHeaderParser->__construct
 
 ```php
-function __construct([ ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsFactory $factory = null])
+function __construct(
+	?\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsFactory $factory = null,
+)
 ```
 
-##### Parameters:
+##### Parameters
 
 - ***\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsFactory*** | ***null*** `$factory` - Optional factory for construction of result objects
 
@@ -57,16 +59,18 @@ function __construct([ ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPart
 #### Method: AuthorizationHeaderParser->parseString
 
 ```php
-function parseString(string $headerValue) : ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface
+function parseString(
+	string $headerValue,
+): ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface
 ```
 
 Parses an Authorization header into `<type>` and `<credentials>`
 
-##### Parameters:
+##### Parameters
 
 - ***string*** `$headerValue` - The header value to parse
 
-##### Returns:
+##### Return Value
 
 - ***\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface*** | ***null*** - AuthorizationParts on success, null on failure.
 Reasons for failure include empty string and non-RFC7235 compliant header values.
@@ -76,17 +80,20 @@ Reasons for failure include empty string and non-RFC7235 compliant header values
 #### Method: AuthorizationHeaderParser->parseServerRequest
 
 ```php
-function parseServerRequest(\Psr\Http\Message\ServerRequestInterface $request [, string $headerName = self::DEFAULT_HEADER]) : ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface
+function parseServerRequest(
+	\Psr\Http\Message\ServerRequestInterface $request,
+	string $headerName = self::DEFAULT_HEADER,
+): ?\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface
 ```
 
 Helper to easily parse from a PSR ServerRequestInterface
 
-##### Parameters:
+##### Parameters
 
 - ***\Psr\Http\Message\ServerRequestInterface*** `$request` - The PSR ServerRequestInterface to read from
 - ***string*** `$headerName` - Optional header name to parse. Defaults to Authorization.
 
-##### Returns:
+##### Return Value
 
 - ***\Corpus\HttpMessageUtils\Authorization\AuthorizationPartsInterface*** | ***null*** - AuthorizationParts on success, null on failure.
 
@@ -98,7 +105,7 @@ Representation of the parts of an Authorization Header:
 #### Method: AuthorizationPartsInterface->getType
 
 ```php
-function getType() : string
+function getType(): string
 ```
 
 The specified authorization type
@@ -108,7 +115,7 @@ The specified authorization type
 #### Method: AuthorizationPartsInterface->getCredentials
 
 ```php
-function getCredentials() : string
+function getCredentials(): string
 ```
 
 The specified authorization credentials
@@ -142,10 +149,14 @@ class ProxyAwareSchemer {
 #### Method: ProxyAwareSchemer->__construct
 
 ```php
-function __construct([ ?array $server = null [, ?array $proxyServerHttpsKeyValues = null [, ?array $proxyServerPortKeys = null]]])
+function __construct(
+	?array $server = null,
+	?array $proxyServerHttpsKeyValues = null,
+	?array $proxyServerPortKeys = null,
+)
 ```
 
-##### Parameters:
+##### Parameters
 
 - ***array<string,mixed>*** | ***null*** `$server` - Server array to inspect. Defaults to $_SERVER.
 - ***array<string,string>*** | ***null*** `$proxyServerHttpsKeyValues` - Map of $_SERVER keys to their expected https-positive value.
@@ -157,13 +168,17 @@ Defaults to ProxyAwareSchemer::HTTPS_EXPECTED_SERVER_VALUES
 #### Method: ProxyAwareSchemer->withUriWithDetectedScheme
 
 ```php
-function withUriWithDetectedScheme(\Psr\Http\Message\ServerRequestInterface $serverRequest [, bool $detectPort = true [, ?int $defaultOnHttps = self::REMOVE_PORT]]) : \Psr\Http\Message\ServerRequestInterface
+function withUriWithDetectedScheme(
+	\Psr\Http\Message\ServerRequestInterface $serverRequest,
+	bool $detectPort = true,
+	?int $defaultOnHttps = self::REMOVE_PORT,
+): \Psr\Http\Message\ServerRequestInterface
 ```
 
 Given a \Psr\Http\Message\ServerRequestInterface returns a new instance of ServerRequestInterface with a new Uri  
 having the scheme adjusted to match the detected external scheme as defined by the proxies headers.
 
-##### Parameters:
+##### Parameters
 
 - ***bool*** `$detectPort` - Enable / Disable proxy port sniffing.
 - ***int*** | ***null*** `$defaultOnHttps` - Default port to use if sniffing fails but HTTPS proxy is detected.
@@ -176,13 +191,17 @@ Passing null will leave port as-is.
 #### Method: ProxyAwareSchemer->withDetectedScheme
 
 ```php
-function withDetectedScheme(\Psr\Http\Message\UriInterface $uri [, bool $detectPort = true [, ?int $defaultOnHttps = self::REMOVE_PORT]]) : \Psr\Http\Message\UriInterface
+function withDetectedScheme(
+	\Psr\Http\Message\UriInterface $uri,
+	bool $detectPort = true,
+	?int $defaultOnHttps = self::REMOVE_PORT,
+): \Psr\Http\Message\UriInterface
 ```
 
 Given a \Psr\Http\Message\UriInterface returns an instance of UriInterface having the scheme adjusted to match  
 the detected external scheme as defined by the proxies headers.
 
-##### Parameters:
+##### Parameters
 
 - ***bool*** `$detectPort` - Enable / Disable proxy port sniffing.
 - ***int*** | ***null*** `$defaultOnHttps` - Default port to use if sniffing fails but HTTPS proxy is detected.
@@ -195,13 +214,16 @@ Passing null will leave port as-is.
 #### Method: ProxyAwareSchemer->withDetectedPort
 
 ```php
-function withDetectedPort(\Psr\Http\Message\UriInterface $uri [, ?int $default = null]) : \Psr\Http\Message\UriInterface
+function withDetectedPort(
+	\Psr\Http\Message\UriInterface $uri,
+	?int $default = null,
+): \Psr\Http\Message\UriInterface
 ```
 
 Given a \Psr\Http\Message\UriInterface returns an instance of UriInterface having the port adjusted to match  
 the detected external scheme as defined by the proxies headers.
 
-##### Parameters:
+##### Parameters
 
 - ***int*** | ***null*** `$default` - Defines a default fallback port.
 Passing ProxyAwareSchemer::REMOVE_PORT will default to removing the port information.
@@ -226,12 +248,12 @@ MIT License Copyright (c) 2017 Woody Gilk
 #### Method: ResponseSender->__construct
 
 ```php
-function __construct([ bool $fullHttpStmtHeader = false [, bool $rewindBody = true]])
+function __construct(bool $fullHttpStmtHeader = false, bool $rewindBody = true)
 ```
 
 ResponseSender constructor.
 
-##### Parameters:
+##### Parameters
 
 - ***bool*** `$fullHttpStmtHeader` - Setting to `true` enables full HTTP statement construction which allows
 non-standard reason phrases and potentially mismatched protocol versions.
@@ -244,7 +266,7 @@ before transmission.
 #### Method: ResponseSender->send
 
 ```php
-function send(\Psr\Http\Message\ResponseInterface $response) : void
+function send(\Psr\Http\Message\ResponseInterface $response): void
 ```
 
 Trigger the transmission of the given \Psr\Http\Message\ResponseInterface

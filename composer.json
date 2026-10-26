@@ -10,7 +10,7 @@
 		"corpus/coding-standard": "^0.10.0",
 		"corpus/php-cs-fixer-config": "^0.1.0",
 		"donatj/drop": "^1.1",
-		"donatj/mddoc": "^0.11.1",
+		"donatj/mddoc": "=0.14.1",
 		"friendsofphp/php-cs-fixer": "^3.95",
 		"guzzlehttp/psr7": "^2.12 || ^3.0",
 		"php-mock/php-mock-phpunit": "^2.15",

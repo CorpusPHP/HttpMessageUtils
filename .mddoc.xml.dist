@@ -1,6 +1,6 @@
 <mddoc>
-	<docpage target="README.md" autoloader="psr4" autoloader-root="src"
-			 autoloader-root-namespace="Corpus\HttpMessageUtils">
+	<docpage target="README.md">
+		<autoloader type="psr4" root="src" namespace="Corpus\HttpMessageUtils"/>
 
 		<section title="HTTP Message Utils">
 			<badge-poser type="version"/>
