@@ -7,10 +7,13 @@ README.md: $(SRC_FILES) composer.json .mddoc.xml.dist
 fix: cbf
 	vendor/bin/php-cs-fixer fix
 
+.PHONY: docs
+docs:
+	vendor/bin/mddoc --dry-run=true .mddoc.xml.dist
+
 .PHONY: test
 test: cs
 	vendor/bin/phpunit
-	vendor/bin/mddoc --dry-run=true .mddoc.xml.dist
 	vendor/bin/php-cs-fixer fix --dry-run
 	vendor/bin/phpstan
 
