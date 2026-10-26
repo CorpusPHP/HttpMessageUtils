@@ -33,7 +33,7 @@ jobs:
         run: composer install
 
       - name: Verify generated documentation
-        run: make docs
+        run: make test-docs
 
       - name: Install PSR HTTP Message
         run: |
