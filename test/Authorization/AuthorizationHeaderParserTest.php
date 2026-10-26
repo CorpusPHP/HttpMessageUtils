@@ -7,14 +7,12 @@ use PHPUnit\Framework\TestCase;
 
 class AuthorizationHeaderParserTest extends TestCase {
 
-	/**
-	 * @dataProvider authorizationProvider
-	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('authorizationProvider')]
 	public function testParseString(
 		string $header,
 		?string $type,
 		?string $credentials = null
-	) : void {
+	): void {
 		$parser = new AuthorizationHeaderParser;
 		$result = $parser->parseString($header);
 
@@ -30,14 +28,12 @@ class AuthorizationHeaderParserTest extends TestCase {
 		$this->assertSame($credentials, $result->getCredentials());
 	}
 
-	/**
-	 * @dataProvider authorizationProvider
-	 */
+	#[\PHPUnit\Framework\Attributes\DataProvider('authorizationProvider')]
 	public function testParseServerRequest(
 		string $header,
 		?string $type,
 		?string $credentials = null
-	) : void {
+	): void {
 		$parser  = new AuthorizationHeaderParser;
 		$request = new ServerRequest("POST", "https://example.com", [
 			'Authorization' => $header,
@@ -57,7 +53,7 @@ class AuthorizationHeaderParserTest extends TestCase {
 		$this->assertSame($credentials, $result->getCredentials());
 	}
 
-	public function testParseServerRequest_noHeader() : void {
+	public function testParseServerRequest_noHeader(): void {
 		$parser  = new AuthorizationHeaderParser;
 		$request = new ServerRequest("GET", "https://example.com");
 
@@ -65,7 +61,7 @@ class AuthorizationHeaderParserTest extends TestCase {
 		$this->assertNull($result);
 	}
 
-	public function authorizationProvider() : \Generator {
+	public static function authorizationProvider(): \Generator {
 		yield [ '', null ];
 		yield [ 'Foo', null ];
 		yield [ 'Foo bar', 'Foo', 'bar' ];

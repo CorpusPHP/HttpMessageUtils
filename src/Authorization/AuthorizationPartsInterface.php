@@ -11,11 +11,11 @@ interface AuthorizationPartsInterface {
 	/**
 	 * The specified authorization type
 	 */
-	public function getType() : string;
+	public function getType(): string;
 
 	/**
 	 * The specified authorization credentials
 	 */
-	public function getCredentials() : string;
+	public function getCredentials(): string;
 
 }

@@ -10,10 +10,8 @@ class ResponseSenderTest extends TestCase {
 
 	use PHPMock;
 
-	/**
-	 * @dataProvider sendOptionProvider
-	 */
-	public function testSend( bool $fullStmt ) : void {
+	#[\PHPUnit\Framework\Attributes\DataProvider('sendOptionProvider')]
+	public function testSend( bool $fullStmt ): void {
 		$response = new Response(
 			$status = 200,
 			$headers = [
@@ -64,7 +62,7 @@ class ResponseSenderTest extends TestCase {
 		$this->assertSame($body, $output);
 	}
 
-	public function sendOptionProvider() : \Generator {
+	public static function sendOptionProvider(): \Generator {
 		yield [ true ];
 
 		yield [ false ];

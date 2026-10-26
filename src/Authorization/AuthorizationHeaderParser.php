@@ -51,7 +51,7 @@ class AuthorizationHeaderParser {
 	 */
 	public function parseString(
 		string $headerValue
-	) : ?AuthorizationPartsInterface {
+	): ?AuthorizationPartsInterface {
 		$headerValue = trim($headerValue);
 		if( !$headerValue ) {
 			return null;
@@ -76,7 +76,7 @@ class AuthorizationHeaderParser {
 	public function parseServerRequest(
 		ServerRequestInterface $request,
 		string $headerName = self::DEFAULT_HEADER
-	) : ?AuthorizationPartsInterface {
+	): ?AuthorizationPartsInterface {
 		$header = $request->getHeaderLine($headerName);
 
 		return $this->parseString($header);

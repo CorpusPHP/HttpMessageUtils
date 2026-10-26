@@ -49,9 +49,10 @@ class ResponseSender {
 	/**
 	 * Trigger the transmission of the given \Psr\Http\Message\ResponseInterface
 	 */
-	public function send( ResponseInterface $response ) : void {
+	public function send( ResponseInterface $response ): void {
 		if( $this->fullHttpStmtHeader ) {
-			$httpStmt = sprintf('HTTP/%s %s %s',
+			$httpStmt = sprintf(
+				'HTTP/%s %s %s',
 				$response->getProtocolVersion(),
 				$response->getStatusCode(),
 				$response->getReasonPhrase()
