@@ -12,7 +12,7 @@ fix: cbf
 
 .PHONY: test-docs
 test-docs:
-	vendor/bin/mddoc --dry-run=true .mddoc.xml.dist
+	vendor/bin/mddoc --dry-run=true
 
 .PHONY: test
 test: cs
