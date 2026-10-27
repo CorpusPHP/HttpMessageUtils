@@ -52,7 +52,7 @@ class ProxyAwareSchemerTest extends TestCase {
 		string $link,
 		array $server,
 		bool $detectPort = true,
-		int $default = ProxyAwareSchemer::REMOVE_PORT
+		int $default = ProxyAwareSchemer::REMOVE_PORT,
 	): void {
 		$request = new ServerRequest('GET', $link);
 

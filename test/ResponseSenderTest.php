@@ -18,7 +18,7 @@ class ResponseSenderTest extends TestCase {
 				'Content-Type' => 'text/plain',
 			],
 			$body = uniqid('test_', true),
-			$version = '1.1'
+			$version = '1.1',
 		);
 
 		$response = $response->withHeader('X-Test', 'test')

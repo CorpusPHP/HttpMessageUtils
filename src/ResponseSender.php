@@ -40,7 +40,7 @@ class ResponseSender {
 	 */
 	public function __construct(
 		bool $fullHttpStmtHeader = false,
-		bool $rewindBody = true
+		bool $rewindBody = true,
 	) {
 		$this->fullHttpStmtHeader = $fullHttpStmtHeader;
 		$this->rewindBody         = $rewindBody;
@@ -55,7 +55,7 @@ class ResponseSender {
 				'HTTP/%s %s %s',
 				$response->getProtocolVersion(),
 				$response->getStatusCode(),
-				$response->getReasonPhrase()
+				$response->getReasonPhrase(),
 			);
 
 			header($httpStmt, true, $response->getStatusCode());
@@ -70,7 +70,7 @@ class ResponseSender {
 
 				header(
 					sprintf("%s: %s", $name, $value),
-					!isset($sentHeaders[$lower])
+					!isset($sentHeaders[$lower]),
 				);
 
 				$sentHeaders[$lower] = true;

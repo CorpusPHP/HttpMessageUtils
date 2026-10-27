@@ -56,7 +56,7 @@ class ProxyAwareSchemer {
 	public function __construct(
 		?array $server = null,
 		?array $proxyServerHttpsKeyValues = null,
-		?array $proxyServerPortKeys = null
+		?array $proxyServerPortKeys = null,
 	) {
 		if( is_array($server) ) {
 			$this->server = $server;
@@ -81,10 +81,10 @@ class ProxyAwareSchemer {
 	public function withUriWithDetectedScheme(
 		ServerRequestInterface $serverRequest,
 		bool $detectPort = true,
-		?int $defaultOnHttps = self::REMOVE_PORT
+		?int $defaultOnHttps = self::REMOVE_PORT,
 	): ServerRequestInterface {
 		return $serverRequest->withUri(
-			$this->withDetectedScheme($serverRequest->getUri(), $detectPort, $defaultOnHttps)
+			$this->withDetectedScheme($serverRequest->getUri(), $detectPort, $defaultOnHttps),
 		);
 	}
 
@@ -101,7 +101,7 @@ class ProxyAwareSchemer {
 	public function withDetectedScheme(
 		UriInterface $uri,
 		bool $detectPort = true,
-		?int $defaultOnHttps = self::REMOVE_PORT
+		?int $defaultOnHttps = self::REMOVE_PORT,
 	): UriInterface {
 		foreach( $this->proxyServerHttpsKeyValues as $serverKey => $serverValue ) {
 			if( isset($this->server[$serverKey])
