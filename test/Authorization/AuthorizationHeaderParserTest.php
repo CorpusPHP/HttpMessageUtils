@@ -11,7 +11,7 @@ class AuthorizationHeaderParserTest extends TestCase {
 	public function testParseString(
 		string $header,
 		?string $type,
-		?string $credentials = null
+		?string $credentials = null,
 	): void {
 		$parser = new AuthorizationHeaderParser;
 		$result = $parser->parseString($header);
@@ -32,7 +32,7 @@ class AuthorizationHeaderParserTest extends TestCase {
 	public function testParseServerRequest(
 		string $header,
 		?string $type,
-		?string $credentials = null
+		?string $credentials = null,
 	): void {
 		$parser  = new AuthorizationHeaderParser;
 		$request = new ServerRequest("POST", "https://example.com", [

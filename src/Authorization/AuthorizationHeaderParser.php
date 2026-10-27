@@ -33,7 +33,7 @@ class AuthorizationHeaderParser {
 	 * @param AuthorizationPartsFactory|null $factory Optional factory for construction of result objects
 	 */
 	public function __construct(
-		?AuthorizationPartsFactory $factory = null
+		?AuthorizationPartsFactory $factory = null,
 	) {
 		if( !$factory ) {
 			$factory = new AuthorizationPartsFactory;
@@ -50,7 +50,7 @@ class AuthorizationHeaderParser {
 	 * Reasons for failure include empty string and non-RFC7235 compliant header values.
 	 */
 	public function parseString(
-		string $headerValue
+		string $headerValue,
 	): ?AuthorizationPartsInterface {
 		$headerValue = trim($headerValue);
 		if( !$headerValue ) {
@@ -75,7 +75,7 @@ class AuthorizationHeaderParser {
 	 */
 	public function parseServerRequest(
 		ServerRequestInterface $request,
-		string $headerName = self::DEFAULT_HEADER
+		string $headerName = self::DEFAULT_HEADER,
 	): ?AuthorizationPartsInterface {
 		$header = $request->getHeaderLine($headerName);
 
