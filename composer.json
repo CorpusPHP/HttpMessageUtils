@@ -12,7 +12,7 @@
 		"donatj/drop": "^1.1",
 		"donatj/mddoc": "=0.14.1",
 		"friendsofphp/php-cs-fixer": "^3.95",
-		"guzzlehttp/psr7": "^2.12 || ^3.0",
+		"guzzlehttp/psr7": "^2.13 || ^3.2",
 		"php-mock/php-mock-phpunit": "^2.15",
 		"phpstan/phpstan": "=2.3.4",
 		"phpunit/phpunit": "^10.5",
